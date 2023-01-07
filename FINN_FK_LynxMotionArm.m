@@ -66,7 +66,7 @@ T_e
 
 % now get a specified result, for example: 
 
-T_e_Specified = subs(T_e, [q1, q2, q3, q4, q5, l1, l2, l3, d1], [0*(pi/180),90*(pi/180),0*(pi/180), 0*(pi/180), 0*(pi/180), 1, 1, 1, 1])
+T_e_Specified = subs(T_e, [q1, q2, q3, q4, q5, l1, l2, l3, d1], [0*(pi/180),0*(pi/180),0*(pi/180), 0*(pi/180), 0*(pi/180), 1, 1, 1, 1])
 
 %% The following code simulates the forward kinematics of a the lynxmotion 
 % arm using my forward kinematics calculated above.
@@ -87,8 +87,8 @@ disp('and Figure 3 shows the maximum potential workspace of its end effector')
 % USING _set TO MARK WHEN WE HAVE DEFINED OUR SYMBOLIC VARIABLES.
 q1_set = [ 0 20 40 45 ]'*pi/180 ; % base can spin full 360 degrees
 q2_set = [ 0 30 60 90]'*pi/180 ; % first p joint can move 0 to 180
-q3_set = [ 0 10 20 30 ]'*pi/180 ; % second p joint can move -180 to 180
-q4_set = [ 0 -10 -20 -30]'*pi/180 ; % third p joint can move -180 to 180
+q3_set = [ 0 10 20 0 ]'*pi/180 ; % second p joint can move -180 to 180
+q4_set = [ 0 -10 -20 90]'*pi/180 ; % third p joint can move -180 to 180
 q5_set = [ 0 90 180 30 ]'*pi/180 ; % claw can spin full 360 degrees
 
 
@@ -152,9 +152,9 @@ set(1,'position',[680 558 560 420])
 
 
 % IN 3D...
-plot3(pt(1,1), pt(1,2), pt(1,3), 'ro')       % plot the first position of the robot's end effector
+plot3(pt(1,1), pt(1,2), pt(1,3), 'ro','Linewidth',5)       % plot the first position of the robot's end effector
 hold on
-plot3(pt(2:4,1),pt(2:4,2),pt(2:4,3), 'o')       % plot the 3 following positions of the robot's end effector
+plot3(pt(2:4,1),pt(2:4,2),pt(2:4,3), 'o','Linewidth',5')       % plot the 3 following positions of the robot's end effector
 title('Tip Trajectory') ; xlabel('x (m)') ; ylabel('y (m)') ; zlabel('z (m)');
 
 
@@ -256,11 +256,11 @@ for i = 1:4 % zeros is the base position, doesn't change.
     hold on
     
     % label axes, start point, end point.
-    xlabel('x (m)') ; ylabel('y (m)') ; zlabel('z (m)') 
-    text(pt(1,1),pt(1,2),pt(1,3), 'x') ; text(pt(1,1) + 0.002,pt(1,2) + 0.002,pt(1,3) + 0.002,'ptStart') ;
-    text(pt(4,1),pt(4,2),pt(4,3), 'x') ; text(pt(4,1) + 0.002,pt(4,2) + 0.002,pt(4,3) + 0.002,'ptEnd') ;
+    text(pt(1,1),pt(1,2),pt(1,3), 'x') ; text(pt(1,1) + 0.002,pt(1,2) + 0.002,pt(1,3) + 0.002,'   Start') ;
+    text(pt(4,1),pt(4,2),pt(4,3), 'x') ; text(pt(4,1) + 0.002,pt(4,2) + 0.002,pt(4,3) + 0.002,'   End') ;
+    title('Whole Arm Trajectory') ; xlabel('x (m)') ; ylabel('y (m)') ; zlabel('z (m)');
     axis([ -0.1 0.4 -0.1 0.4 0 0.4 ])
-    hold off % CHANGE TO HOLD ON TO SEE ALL LINES AT ONCE.
+    hold on % CHANGE TO HOLD ON TO SEE ALL LINES AT ONCE.
     pause(2)
 end
 
